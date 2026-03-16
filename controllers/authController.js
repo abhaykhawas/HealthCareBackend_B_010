@@ -25,8 +25,8 @@ const loginDoctor = async (req, res) => {
 // Include practice number with admin role
 const registerDoctor = async (req, res) => {
     console.log("Check")
-    const { name, email, password, role } = req.body;
-    console.log(name, email, password, role)
+    const { name, email, password, role, practiceNumber } = req.body;
+    
     const doctor = await User.findOne({ email, role: 'doctor' });
     if(doctor) return res.status(400).json({ message: "Doctor already exsists" });
 
@@ -38,7 +38,9 @@ const registerDoctor = async (req, res) => {
         name,
         email,
         password: hashedPassword,
-        role
+        role,
+        practiceNumber,
+        active: false
     })
 
     await newDoctor.save()
